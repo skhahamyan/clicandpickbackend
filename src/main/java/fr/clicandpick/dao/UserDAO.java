@@ -1,6 +1,10 @@
 package fr.clicandpick.dao;
 
 import fr.clicandpick.model.User;
+import fr.clicandpick.utils.HibernateUtil;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * Created by Marc on 13/08/2015.
@@ -8,20 +12,25 @@ import fr.clicandpick.model.User;
 public class UserDAO extends DAO<User> {
 
 
-    public UserDAO(DAOFactory daoFactory) {
-        super(daoFactory);
-    }
-
     @Override
     public User find(long id) {
-        //TODO
-        return null;
+        Session session = HibernateUtil.currentSession();
+        return  (User) session.get(User.class, id);
     }
 
     @Override
     public User create(User obj) {
-        //TODO
-        return null;
+        Session session = HibernateUtil.currentSession();
+        session.beginTransaction();
+
+        //Save the employee in database
+        session.save(obj);
+
+        //Commit the transaction
+        session.getTransaction().commit();
+        HibernateUtil.closeSession();
+
+        return obj;
     }
 
     @Override
@@ -36,7 +45,11 @@ public class UserDAO extends DAO<User> {
     }
 
     public User findByEmail(String email) {
-        //TODO
-        return null;
+        Session session = HibernateUtil.currentSession();
+
+        Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("email", email));
+
+        return (User) criteria.uniqueResult();
+
     }
 }

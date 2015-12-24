@@ -2,24 +2,29 @@ package fr.clicandpick.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
+
 /**
  * Created by Marc on 08/08/2015.
  */
+@Entity
+@Table(name = "users")
 public class User {
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private String lastName;
     private String email;
     private String password;
 
     public User() {
     }
 
-    public User(long id, String name, String lastName, String email, String password) {
+    public User(long id, String name, String email, String password) {
         this.id = id;
         this.name = name;
-        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
@@ -38,14 +43,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {

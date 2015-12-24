@@ -5,12 +5,6 @@ package fr.clicandpick.dao;
  */
 public abstract class DAO<T> {
 
-    private DAOFactory daoFactory;
-
-    public DAO(DAOFactory daoFactory) {
-        this.daoFactory = daoFactory;
-    }
-
     public abstract T find(long id) throws DAOException;
 
     public abstract T create(T obj) throws DAOException;

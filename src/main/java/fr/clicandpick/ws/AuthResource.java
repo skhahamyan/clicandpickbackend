@@ -3,7 +3,6 @@ package fr.clicandpick.ws;
 import com.nimbusds.jose.JOSEException;
 import fr.clicandpick.core.Token;
 import fr.clicandpick.dao.DAOException;
-import fr.clicandpick.dao.DAOFactory;
 import fr.clicandpick.dao.UserDAO;
 import fr.clicandpick.model.User;
 import fr.clicandpick.utils.AuthUtils;
@@ -27,11 +26,7 @@ public class AuthResource {
     private static final String LOGING_ERROR_MSG = "",
             CONFLICT_MSG = "";
 
-    private UserDAO dao;
-
-    AuthResource() {
-        dao = DAOFactory.getInstance().getUserDao();
-    }
+    private UserDAO dao = new UserDAO();
 
     @POST
     @Path("login")
